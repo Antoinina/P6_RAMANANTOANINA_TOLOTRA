@@ -1,14 +1,15 @@
 const express = require('express'),
   bodyParser = require('body-parser'), // To extract the JSON object from the front-end
-  mongoose = require('mongoose'); //To interact with MongoDB
+  mongoose = require('mongoose'), //To interact with MongoDB
+  path = require('path');
 
 // Import the router in the app
-const sausageRoutes = require('./routes/sausage'),
+const sauceRoutes = require('./routes/sauce'),
   userRoutes = require('./routes/user');
 
 const app = express(); //Create an app with Express
 
-mongoose.connect('mongodb+srv://tolonina:3uVJBSG715MYhqZN@cluster.awjwa.mongodb.net/sausages?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://tolonina:3uVJBSG715MYhqZN@cluster.awjwa.mongodb.net/sauces?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -26,7 +27,9 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json()); // To apply in all application
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
-app.use('/api/sauces', sausageRoutes);
 
 module.exports = app;
