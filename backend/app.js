@@ -9,7 +9,7 @@ const sauceRoutes = require('./routes/sauce'),
 
 const app = express(); //Create an app with Express
 
-mongoose.connect('mongodb+srv://tolonina:3uVJBSG715MYhqZN@cluster.awjwa.mongodb.net/sauces?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://tolonina:3uVJBSG715MYhqZN@cluster.awjwa.mongodb.net/sauce?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -29,7 +29,7 @@ app.use(bodyParser.json()); // To apply in all application
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/sauces', sauceRoutes);
 
 module.exports = app;

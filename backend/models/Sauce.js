@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 /* Sauce data model */
 const sauceSchema = mongoose.Schema({
+    userId: { type: String },
     name: { type: String, required: true },
     manufacturer: { type: String, required: true },
     description: { type: String, required: true },

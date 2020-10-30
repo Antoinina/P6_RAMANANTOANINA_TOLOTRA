@@ -8,6 +8,9 @@ const auth = require('../middleware/auth'),
 /* Send informations from the front to the db */
 router.post('/', auth, multer, sauceCtrl.createSauce);
 
+/* Send the update of likes for a sauce */
+router.post('/:id/like', auth, sauceCtrl.updateLike);
+
 /* Pick juste one sauce */
 router.get('/:id', auth, sauceCtrl.getOneSauce);
 
