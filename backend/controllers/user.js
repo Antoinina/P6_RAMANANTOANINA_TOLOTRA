@@ -1,13 +1,25 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const MaskData = require('maskdata');
 const { body, validationResult  } = require('express-validator'); // Check the validity of the from fields and reports all errors
 
+const maskEmailOptions = {
+    maskWith : 'X',
+    unmaskedStartCharacters : 2,
+    maskAtTheRate : false,
+    maxMaskedCharactersBeforeAtTheRate : 15,
+    maxMaskedCharactersAfterAtTheRate : 15
+};
+
+
+/* Create user */
 exports.signup = (req, res, next) => {
+    const maskedEmail = MaskData.maskEmail2(req.body.email, maskEmailOptions);
     bcrypt.hash(req.body.password, 10) // Saler the password 10 times
         .then(hash => {
             const user = new User({
-                email: req.body.email,
+                email: maskedEmail,
                 password: hash
             });
             user.save()
@@ -18,7 +30,8 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    const maskedEmail = MaskData.maskEmail2(req.body.email, maskEmailOptions);
+    User.findOne({ email: maskedEmail })
         .then(user => {
             if(!user){
                 return res.status(401).json({ message: 'User not found !'});

@@ -1,5 +1,4 @@
 const Sauce = require('../models/Sauce'); // Import the model in the app
-const User = require('../models/User');
 const fs = require('fs');
 
 exports.createSauce = (req, res, next) => {
@@ -81,7 +80,6 @@ exports.updateLike = (req, res, next) => {
                     }
                 }
             }
-            console.log(sauce);
 
             sauce.save()
                 .then(() => res.status(201).json({ message: 'Your sauce is correctly saved !' }))

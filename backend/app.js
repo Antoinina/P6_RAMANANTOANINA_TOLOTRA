@@ -1,7 +1,7 @@
-const express = require('express'),
-  bodyParser = require('body-parser'), // To extract the JSON object from the front-end
-  mongoose = require('mongoose'), //To interact with MongoDB
-  path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser'); // To extract the JSON object from the front-end
+const mongoose = require('mongoose'); //To interact with MongoDB
+const path = require('path');
 
 // Import the router in the app
 const sauceRoutes = require('./routes/sauce'),
