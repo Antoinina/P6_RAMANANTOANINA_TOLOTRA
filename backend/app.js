@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser'); // To extract the JSON object from the front-end
 const mongoose = require('mongoose'); //To interact with MongoDB
 const path = require('path');
+const ESAPI = require('node-esapi');
+const helmet = require('helmet');
 
 // Import the router in the app
 const sauceRoutes = require('./routes/sauce'),
@@ -24,6 +26,10 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+app.use(ESAPI.middleware()); // To encode url and JS code to block injection attack
+
+app.use(helmet()); // To stop XSS
 
 app.use(bodyParser.json()); // To apply in all application
 
